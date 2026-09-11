@@ -36,9 +36,18 @@ jobs:
       - name: Assemble site (production at root, test build under /test)
         run: |
           mkdir -p dist/test
-          # Eén vaste app: index.html is de app zelf (versie zit in APP_VERSIE).
-          cp main/index.html dist/index.html
-          cp development/index.html dist/test/index.html
+          # index.html is de app; daarnaast losse routedata (data/), PWA-bestanden en iconen.
+          # Veerkrachtig: nieuwe bestanden alleen kopieren als ze bestaan (branch kan achterlopen).
+          copyto () {
+            mkdir -p "$2"
+            cp "$1/index.html" "$2/index.html"
+            for f in sw.js manifest.json icon-192.png icon-512.png; do
+              [ -f "$1/$f" ] && cp "$1/$f" "$2/$f" || true
+            done
+            [ -d "$1/data" ] && cp -r "$1/data" "$2/data" || true
+          }
+          copyto main dist
+          copyto development dist/test
 
       - name: Mark test build as TEST (banner + isolated storage)
         run: |
