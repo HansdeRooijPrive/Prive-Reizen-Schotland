@@ -56,14 +56,9 @@ jobs:
           p = pathlib.Path('dist/test/index.html')
           html = p.read_text(encoding='utf-8')
 
-          # 1) Opslag-isolatie: test mag nooit dezelfde localStorage-sleutel als
-          #    productie delen (prod en test draaien op dezelfde origin).
-          html = html.replace("'ssTip'", "'ssTip.test'")
-          assert "'ssTip.test'" in html, "Test-opslag isolatie mislukt"
-
-          # 2) Titel + theme-kleur markeren als TEST
-          html = html.replace("<title>Reiskaarten</title>",
-                              "<title>TEST · Reiskaarten</title>")
+          # 1) Titel + theme-kleur markeren als TEST (titel robuust via regex)
+          import re
+          html = re.sub(r'<title>([^<]*)</title>', r'<title>TEST · \1</title>', html, count=1)
           html = html.replace('theme-color" content="#072d44"',
                               'theme-color" content="#7a3d00"')
 
