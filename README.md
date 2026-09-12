@@ -1,4 +1,4 @@
-# Interactieve-kaarten
+# Reizen Schotland
 
 Mobiele web-app met interactieve routekaarten voor meerdere reizen. Bij het
 openen kies je een bestemming:
@@ -10,9 +10,9 @@ openen kies je een bestemming:
 ## Live (GitHub Pages)
 
 - **Productie** (stabiel, om te delen / als app toe te voegen):
-  `https://hansderooijprive.github.io/Interactieve-kaarten/`
+  `https://hansderooijprive.github.io/Prive-Reizen-Schotland/`
 - **Test** (voorproefje van nieuwe wijzigingen, met "TEST"-lint):
-  `https://hansderooijprive.github.io/Interactieve-kaarten/test/`
+  `https://hansderooijprive.github.io/Prive-Reizen-Schotland/test/`
 
 ## Opzet
 
