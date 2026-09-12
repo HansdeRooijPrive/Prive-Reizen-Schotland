@@ -1,7 +1,7 @@
 {
-  "name": "Interactieve reiskaarten",
-  "short_name": "Reiskaarten",
-  "description": "Interactieve routekaarten voor motorrijders — Schotland en meer.",
+  "name": "Reizen Schotland",
+  "short_name": "Schotland",
+  "description": "Interactieve motorroutes door Schotland — etappes, bezienswaardigheden, tankstations en meer.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

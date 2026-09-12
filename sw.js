@@ -2,7 +2,7 @@
    - App-schil + routedata: stale-while-revalidate (instant laden, op de achtergrond bijgewerkt).
    - Kaarttegels (Stadia Maps): cache-first met begrensde omvang (offline + minder verzoeken).
    Bump VERSION bij elke release zodat oude caches opruimen. */
-const VERSION = 'v1.17';
+const VERSION = 'v2.0';
 const SHELL   = 'shell-' + VERSION;
 const DATA    = 'data-'  + VERSION;
 const TILES   = 'tiles-' + VERSION;
