@@ -2,7 +2,7 @@
    - App-schil + routedata: stale-while-revalidate (instant laden, op de achtergrond bijgewerkt).
    - Kaarttegels (Stadia Maps): cache-first met begrensde omvang (offline + minder verzoeken).
    Bump VERSION bij elke release zodat oude caches opruimen. */
-const VERSION = 'v2.1';
+const VERSION = 'v2.2';
 // Per omgeving gescheiden (OTAP-platform): cachenamen beginnen met de opslagsleutel
 // van de omgeving, en de productie-worker blijft van /acceptatie/ en /test/ af.
 const ENV     = '{{ENV}}';

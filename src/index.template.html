@@ -12,9 +12,9 @@
 <link rel="apple-touch-icon" href="data:image/png;base64,{{ICOON}}">
 <link rel="icon" href="data:image/png;base64,{{ICOON}}">
 <title>{{APP_NAME_ENV}}</title>
-<meta name="description" content="Interactieve routekaarten voor verschillende reizen — zeilen in Griekenland en een rondrit door Schotland.">
+<meta name="description" content="Interactieve motorroutes door Schotland — etappes, bezienswaardigheden, tankstations, whisky-distilleerderijen en meer.">
 <meta property="og:title" content="Reizen Schotland">
-<meta property="og:description" content="Interactieve routekaarten voor verschillende reizen — zeilen in Griekenland en een rondrit door Schotland.">
+<meta property="og:description" content="Interactieve motorroutes door Schotland — etappes, bezienswaardigheden, tankstations, whisky-distilleerderijen en meer.">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
 <style>
@@ -974,9 +974,11 @@ document.addEventListener('dblclick',function(ev){ev.preventDefault();},{passive
 <script>
 /* =================== VERSIE / CHANGELOG (zelfde logica als km-declaratie) =================== */
 const APP_VERSIE = {
-  versie: "2.1",
+  versie: "2.2",
   datum: "2026-09-13",
   historie: [
+    { versie: "2.2", datum: "2026-09-13", soort: "klein",
+      tekst: "Kleine opschoning na de splitsing: de pagina-omschrijving gaat nu volledig over Schotland." },
     { versie: "2.1", datum: "2026-09-13", soort: "middel",
       tekst: "Op het OTAP-platform: aparte test-, acceptatie- en productieomgeving, elk met een eigen naam, icoon en offline-opslag." },
     { versie: "2.0", datum: "2026-08-23", soort: "groot",
