@@ -2,11 +2,17 @@
    - App-schil + routedata: stale-while-revalidate (instant laden, op de achtergrond bijgewerkt).
    - Kaarttegels (Stadia Maps): cache-first met begrensde omvang (offline + minder verzoeken).
    Bump VERSION bij elke release zodat oude caches opruimen. */
-const VERSION = 'v2.0';
-const SHELL   = 'shell-' + VERSION;
-const DATA    = 'data-'  + VERSION;
-const TILES   = 'tiles-' + VERSION;
-const SHELL_ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+const VERSION = 'v2.1';
+// Per omgeving gescheiden (OTAP-platform): cachenamen beginnen met de opslagsleutel
+// van de omgeving, en de productie-worker blijft van /acceptatie/ en /test/ af.
+const ENV     = '{{ENV}}';
+const PREFIX  = '{{STORAGE_KEY}}-';
+const SHELL   = PREFIX + 'shell-' + VERSION;
+const DATA    = PREFIX + 'data-'  + VERSION;
+const TILES   = PREFIX + 'tiles-' + VERSION;
+const SHELL_ASSETS = ['./', './index.html', './manifest.json'];
+// Caches van de worker van voor het platform (zonder omgeving in de naam).
+const OUDE_CACHE = /^(shell|data|tiles)-v/;
 const TILE_MAX = 800;
 
 self.addEventListener('install', function (e) {
@@ -19,7 +25,11 @@ self.addEventListener('install', function (e) {
 self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(keys.filter(function (k) { return k.indexOf(VERSION) === -1; })
+      return Promise.all(keys.filter(function (k) {
+        var eigenOud = k.indexOf(PREFIX) === 0 && k.indexOf(VERSION) === -1;
+        var vanVoorPlatform = ENV === 'prod' && OUDE_CACHE.test(k);
+        return eigenOud || vanVoorPlatform;
+      })
         .map(function (k) { return caches.delete(k); }));
     }).then(function () { return self.clients.claim(); })
   );
@@ -50,6 +60,12 @@ self.addEventListener('fetch', function (e) {
   if (req.method !== 'GET') return;
   var url;
   try { url = new URL(req.url); } catch (err) { return; }
+
+  // Productie-worker: pagina's en bestanden van acceptatie en test niet aanraken.
+  if (ENV === 'prod') {
+    var scope = self.registration.scope;
+    if (url.href.indexOf(scope + 'acceptatie/') === 0 || url.href.indexOf(scope + 'test/') === 0) return;
+  }
 
   // Kaarttegels: cache-first, begrensd
   if (url.hostname.indexOf('stadiamaps.com') !== -1) {

@@ -1,47 +1,37 @@
-# Reizen Schotland
+# Prive-Reizen-Schotland — Reizen Schotland
 
-Mobiele web-app met interactieve routekaarten voor meerdere reizen. Bij het
-openen kies je een bestemming:
+Interactieve motorroutes door Schotland: etappes, bezienswaardigheden,
+tankstations en meer. Privé-app op het OTAP-platform; de CI/CD én de bouwstap
+komen centraal uit [`OTAP-CI`](https://github.com/HansdeRooijPrive/OTAP-CI) (versie `v2`).
 
-- **⛵ Zeilen · Griekenland** — routekaarten voor de Ionische Zee (offline).
-- **🏍️ Rondrit · Schotland** — motorroutes in delen (deel 1: Dinnet → Ardullie,
-  deel 2: Ardullie → Durness) met bezienswaardigheden en lunch/koffie-stops.
+## OTAP
+| Branch | Omgeving | URL |
+|--------|----------|-----|
+| `development` | Test | https://hansderooijprive.github.io/Prive-Reizen-Schotland/test/ |
+| `acceptatie` | Acceptatie | https://hansderooijprive.github.io/Prive-Reizen-Schotland/acceptatie/ |
+| `main` | Productie | https://hansderooijprive.github.io/Prive-Reizen-Schotland/ |
 
-## Live (GitHub Pages)
+Werkwijze: wijzig op `development` → CI groen → door naar `acceptatie` →
+testen op de acceptatie-URL → pas na expliciet akkoord naar `main` (productie).
 
-- **Productie** (stabiel, om te delen / als app toe te voegen):
-  `https://hansderooijprive.github.io/Prive-Reizen-Schotland/`
-- **Test** (voorproefje van nieuwe wijzigingen, met "TEST"-lint):
-  `https://hansderooijprive.github.io/Prive-Reizen-Schotland/test/`
+## Opbouw
+```
+app.json                  naam, opslagsleutel en kleuren per omgeving
+build.py                  dunne ingang naar de centrale bouwstap (niet aanpassen)
+src/index.template.html   de app (nog één bestand; opknippen kan later)
+src/styles.css            (leeg; stijl staat nog in het sjabloon)
+src/icons/icon.<env>.png  eigen icoon per omgeving (blauw / oranje / groen)
+public/data/*.json        routedata per etappe, op aanvraag geladen
+public/sw.js              service worker (offline), per omgeving gescheiden
+public/manifest.json      installatiegegevens, naam en icoon per omgeving
+index.html                ingecheckte productie-build
+```
+Alles in `public/` komt per omgeving naast `index.html` te staan; in tekst-
+bestanden daar worden de placeholders (zoals `{{STORAGE_KEY}}`) ingevuld.
 
-## Opzet
-
-De hele app zit in één bestand: [`index.html`](index.html). De **URL blijft
-altijd gelijk** — het versienummer staat niet in de link maar *in* de app, in
-het `APP_VERSIE`-object (zichtbaar via de versie-chip en "Over deze app").
-
-### Nieuwe versie uitbrengen
-1. Wijzig `index.html`.
-2. Werk bovenaan `APP_VERSIE` bij: bump `versie`/`datum` en voeg een regel toe
-   aan `historie` (`soort`: `klein`/`middel`/`groot`).
-3. Commit — dezelfde URL toont automatisch de nieuwe versie.
-
-## Werkwijze: test → productie
-
-Twee branches sturen twee omgevingen aan:
-
-| Branch        | Omgeving   | URL         |
-|---------------|------------|-------------|
-| `main`        | Productie  | `/` (root)  |
-| `development` | Test       | `/test/`    |
-
-- Nieuwe wijzigingen commit je op **`development`**. Een push bouwt automatisch
-  de test-omgeving (`/test/`). Die krijgt een zichtbaar **TEST**-lint en een
-  eigen `localStorage`-sleutel, zodat test en productie elkaars gegevens niet
-  raken.
-- Ben je tevreden? Dan merge je `development` → **`main`**. Een push naar `main`
-  publiceert de nieuwe versie op de **productie**-URL.
-
-De deploys lopen via GitHub Actions
-([`.github/workflows`](.github/workflows)); source van Pages staat op
-"GitHub Actions".
+## Lokaal (O)
+```bash
+python build.py            # bouwt index.html (productie); haalt eenmalig OTAP-CI op in .otap/
+python build.py --env=test --out ../tmp/test/index.html   # testvariant incl. public/
+python build.py --check    # platformafspraken + index.html controleren
+```

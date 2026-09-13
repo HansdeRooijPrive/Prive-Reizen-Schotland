@@ -1,0 +1,23 @@
+{
+  "platform": "v2",
+  "name": "Reizen Schotland",
+  "short_name": "Schotland",
+  "storage_key": "prive-reizen-schotland",
+  "theme": {
+    "prod": {
+      "merk": "#072d44",
+      "merk_donker": "#051f30",
+      "merk_licht": "#13567d"
+    },
+    "acc": {
+      "merk": "#b45309",
+      "merk_donker": "#92400e",
+      "merk_licht": "#d97706"
+    },
+    "test": {
+      "merk": "#0f7a45",
+      "merk_donker": "#0b5c34",
+      "merk_licht": "#1a9d5c"
+    }
+  }
+}

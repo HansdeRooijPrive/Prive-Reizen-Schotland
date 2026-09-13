@@ -1,0 +1,25 @@
+{
+  "name": "{{APP_NAME_ENV}}",
+  "short_name": "{{APP_SHORT_ENV}}",
+  "description": "Interactieve motorroutes door Schotland — etappes, bezienswaardigheden, tankstations en meer.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#072d44",
+  "theme_color": "{{MERK}}",
+  "icons": [
+    {
+      "src": "data:image/png;base64,{{ICOON}}",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/png;base64,{{ICOON}}",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

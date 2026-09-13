@@ -13,3 +13,5 @@ Desktop.ini
 # Logs en tijdelijke bestanden
 *.log
 *.tmp
+.otap/
+__pycache__/
